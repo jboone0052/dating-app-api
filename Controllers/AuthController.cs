@@ -56,7 +56,6 @@ namespace DatingApp.API.Controllers
         public async Task<IActionResult> Login([FromBody] UserForLoginDto user)
         {
             
-            throw new Exception("Computer says no");
 
             var userFromRepo = await _repo.Login(user.Username, user.Password);
 
