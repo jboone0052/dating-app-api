@@ -61,7 +61,7 @@ namespace DatingApp.API.Controllers
 
             if (userFromRepo == null)
             {
-                return Unauthorized();
+                return BadRequest("Invalid Username or Password");
             }
 
             //generate token
