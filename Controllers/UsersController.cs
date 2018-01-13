@@ -20,7 +20,7 @@ namespace dating_app_api.Controllers
             _repo = repo;
         }
 
-        [HttpGet]
+        [HttpGet("getusers")]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _repo.GetUsers();
@@ -28,7 +28,7 @@ namespace dating_app_api.Controllers
             return Ok(usersDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("getuser/{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _repo.GetUser(id);
