@@ -28,7 +28,8 @@ namespace DatingApp.API.Data
             {
                 return null;
             }
-
+            user.LastActive = DateTime.Now;
+            await _context.SaveChangesAsync();
             return user;
         }
 
