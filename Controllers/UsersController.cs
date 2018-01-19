@@ -4,7 +4,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using dating_app_api.Data;
+using dating_app_api.Helpers;
 using DatingApp.API.Dtos;
+using DatingApp.API.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +14,7 @@ namespace dating_app_api.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
+    [ServiceFilter(typeof(LogUserActivity))]
     public class UsersController : Controller
     {
         private readonly IDatingRepository _repo;
@@ -23,10 +26,13 @@ namespace dating_app_api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers(UserParams userParams)
         {
-            var users = await _repo.GetUsers();
+            var users = await _repo.GetUsers(userParams);
             var usersDto = _mapper.Map<IEnumerable<UserForListDto>>(users);
+
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
+            
             return Ok(usersDto);
         }
 
