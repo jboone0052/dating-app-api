@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using dating_app_api.Helpers;
+using dating_app_api.Models;
 using DatingApp.API.Models;
 
 namespace dating_app_api.Data
@@ -14,5 +15,6 @@ namespace dating_app_api.Data
          Task<User> GetUser(int id);
          Task<Photo> GetPhoto(int id);
          Task<Photo> GetMainPhotoForUser(int userId);
+         Task<Like> GetLike(int userId, int recipientId);
     }
 }
