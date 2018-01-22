@@ -54,17 +54,18 @@ namespace dating_app_api.Controllers
             }
 
             messageForCreationDto.SenderId = userId;
-            var recipient = _repo.GetUser(messageForCreationDto.RecipientId);
+            var recipient = await _repo.GetUser(messageForCreationDto.RecipientId);
             if (recipient == null)
             {
                 return BadRequest("User could not be found");
             }
+            var sender = await _repo.GetUser(messageForCreationDto.SenderId);
 
             var message = _mapper.Map<Message>(messageForCreationDto);
 
             _repo.Add<Message>(message);
 
-            var messageToReturn = _mapper.Map<MessageForCreationDto>(message);
+            var messageToReturn = _mapper.Map<MessageForReturnDto>(message);
             if(await _repo.SaveAll())
             {
                 return CreatedAtRoute("GetMessage", new { id = message.Id}, messageToReturn);
